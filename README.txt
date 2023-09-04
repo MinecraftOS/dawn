@@ -46,4 +46,6 @@ If you ask nicely, you can.
 Making up to 3 useful commits, pull requests and/or issues, you can be added to the list of contributors who can contribute
 to the repo directly.
 
+Only two exceptions I've made are Ocawesome and TheAio, for both of them being very helpful throughout dawn's development
+
 +==========================================================+
