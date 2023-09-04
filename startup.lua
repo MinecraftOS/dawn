@@ -39,7 +39,7 @@ handle.close()
 local spinner = {"|","/","-","\\"}
 local stage = 0
 
-local handle = fs.open("/etc/logs/startup","w")
+local handle = fs.open("/var/logs/startup","w")
 handle.writeLine("DAWN CP-BSL (Computer Post-Boot State Log)")
 
 local tSizex, tSizey = term.getSize()
@@ -133,7 +133,7 @@ for k,v in pairs(bfiles) do
     sleep(0.01)
 end
 
-local handle = fs.open("/etc/logs/startup","a")
+local handle = fs.open("/var/logs/startup","a")
 handle.writeLine("completed basefs and basefiles checks")
 
 print("done")
@@ -184,7 +184,7 @@ else
 end
 
 handle.close()
-local handle = fs.open("/etc/logs/startup","a")
+local handle = fs.open("/var/logs/startup","a")
 handle.writeLine("launching boot program")
 handle.close()
 sleep(1)

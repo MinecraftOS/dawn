@@ -18,8 +18,6 @@
 /root/.local/share/
 /sbin/
 /sbin/regapp/
-/stat/
-/stat/pkg/
 /sys/
 /sys/reg/
 /sys/cfg/

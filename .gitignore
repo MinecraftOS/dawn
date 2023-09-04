@@ -1,18 +1,15 @@
 # /etc/
-etc/logs/
 etc/usr/
-etc/config/
 etc/passwd
 etc/sudoers
-etc/ccpcBug
+etc/hostname
 etc/dump/*
 
 # uncategorized
 tmp/*
-stat/pkg/sources-list.txt
 test.lua
 home/*
-var/dump/*
+var/
 
 # /bin/
 bin/ink.lua

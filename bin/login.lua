@@ -5,11 +5,11 @@
 
 local kernel = require "/kernel"
 
-if fs.exists("/etc/logs/login") then
-    fs.delete("/etc/logs/login")
+if fs.exists("/var/logs/login") then
+    fs.delete("/var/logs/login")
 end
 
-local log = fs.open("/etc/logs/login","w")
+local log = fs.open("/var/logs/login","w")
 log.writeLine("== LOGIN PROMPT LOG ==")
 
 kernel.scrMSG(1,"Reached: login")
@@ -68,16 +68,16 @@ repeat
   until
     user == userlog and pass == userpass
     handle.close()
-    local log = fs.open("/etc/logs/login","a")
+    local log = fs.open("/var/logs/login","a")
     log.writeLine("Authentication complete.")
     log.close()
     local handle2 = fs.open("/etc/usr/.login","w")
     handle2.writeLine(user)
     handle2.close()
-    local defaultsh = fs.open("/etc/dawn/sh-default","r")
+    local defaultsh = fs.open("/etc/sh-default","r")
     local sh = defaultsh.readLine()
     defaultsh.close()
-    local log = fs.open("/etc/logs/login","a")
+    local log = fs.open("/var/logs/login","a")
 
     if fs.exists(home) then
         log.writeLine("Home dir for "..user.." exists. ("..home..")")

@@ -1,7 +1,7 @@
 --[[
-    Dawn-B Kernel
+    Dawn Kernel
     By Dusk
-    B-1.1.0
+    1.2.0
 ]]
 
 local handle
@@ -54,12 +54,12 @@ function k.scrMSG(type,msg,err) --type: 1,2,3,4,5 (see docs); msg: message; err:
                 write("OK")
                 term.setTextColor(colors.white)
                 write("]:"..msg.."("..err..")\n")
-            elseif type == 2 then
-                write("("..name.."):[")
                 term.setTextColor(colors.yellow)
                 write("WARN")
                 term.setTextColor(colors.white)
                 write("]:"..msg.."("..err..")\n")
+            elseif type == 2 then
+                write("("..name.."):[")
             elseif type == 3 then
                 write("("..name.."):[")
                 term.setTextColor(colors.brown)
@@ -157,5 +157,9 @@ function k.periph.drive.fetch() --fetch all drives and return as a table
         end
     return toReturn --return the table
 end
+
+k.fs = {}
+
+
 
 return k

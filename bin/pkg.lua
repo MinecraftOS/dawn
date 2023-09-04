@@ -23,7 +23,7 @@ else
     local ignore = textutils.unserialize(handle.readAll())
     handle.close()
 
-    local handle = fs.open("/stat/pkg/sources-list.txt","r")
+    local handle = fs.open("/etc/pkg/sources-list.txt","r")
     local pkg_srcs = {}
     repeat
         local a = handle.readLine()
