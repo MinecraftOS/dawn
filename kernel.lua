@@ -160,6 +160,12 @@ end
 
 k.fs = {}
 
+function k.fs.assignToUser(file,user)
+    
+end
 
+function k.fs.whoOwns(file)
+    
+end
 
 return k

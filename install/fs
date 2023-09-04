@@ -8,6 +8,7 @@
 /etc/dawn/
 /etc/logs/
 /etc/usr/
+/etc/usr/own/
 /etc/dump/
 /home/
 /lib/
