@@ -31,7 +31,6 @@
 /etc/commlist
 /etc/.dawninf
 /etc/.osinf
-/etc/pkg/.inf
 /etc/pkg/sources-list.txt
 /lib/libconfig.lua
 /lib/liberr.lua
