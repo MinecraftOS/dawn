@@ -18,7 +18,7 @@ local handle = fs.open("/etc/usr/.login","r")
 user = handle.readLine()
 handle.close()
 
-local handle2 = fs.open("/stat/.dawninf","r")
+local handle2 = fs.open("/etc/.dawninf","r")
 local kernelVer = handle2.readLine()
 handle2.close()
 

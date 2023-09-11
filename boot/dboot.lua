@@ -1,7 +1,7 @@
 --dawn default boot program
 --by dusk
 
-local ver = fs.open("/stat/.dawninf", "r")
+local ver = fs.open("/etc/.dawninf", "r")
 local v = ver.readLine()
 ver.close()
 
