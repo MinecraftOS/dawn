@@ -12,3 +12,4 @@ TODO LIST | pre-1.1.1
 - 3-5 second timeout on login
 - file ownership
 - add shutdown functionality (100%)
+- finish fs module (0%)

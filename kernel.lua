@@ -112,6 +112,10 @@ end
 
 k.fs = {}
 
+function k.fs.fsCheck() --check filesystem for all components
+
+end
+
 function k.fs.assignToUser(file,user)
     
 end
