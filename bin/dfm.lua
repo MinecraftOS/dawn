@@ -6,6 +6,14 @@ local function e(s)
     return s == nil or s == ""
 end
 
+if args[1] == "-h" then
+	print([[dfm - poorly made file explorer
+There is an optional argument, being where to open to.
+
+dfm <dir>]])
+error()
+end
+
 if e(args[1]) ~= true then
     if fs.isDir(args[1]) then
         shell.run("/bin/cd",args[1])

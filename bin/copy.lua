@@ -7,7 +7,7 @@ local function e(s)
 end
 
 if args[1] == "-h" then
-    
+    print("syntax: copy <target> <destination>")
 elseif e(args[1]) then
     error("File to copy must not be empty.",0)
 elseif e(args[2]) then

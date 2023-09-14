@@ -3,6 +3,11 @@
 local args = {...}
 local k = require "/kernel"
 
+if args[1] == "-h" then
+    print("sudo is used as a wrapper program for other programs to run them with administrative permissions.")
+    error()
+end
+
 if fs.exists("/bin/"..args[1]..".lua") ~= true then
     error(args[1].." don't exist",0)
 end

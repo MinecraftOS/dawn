@@ -11,7 +11,14 @@ end
 
 local args = {...}
 
-if args[1] == "-a" then
+if args[1] == "-h" then
+    print([[usr - user management
+syntax:
+
+-a <name> <password> <-y/-n> <shell> <-y/-n>
+                     sudo?           /home/(user)?
+-r <name>]])
+elseif args[1] == "-a" then
     local uName
     local pWord
     local sudo
