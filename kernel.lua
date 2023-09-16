@@ -135,8 +135,11 @@ function kfs.editPerms(file, user, level)
     local handle = oldfs.open("/etc/usr/.login","r")
     local currentUser = handle.readLine()
     handle.close()
+    local filePerms = dofile("/.fp")
+    if filePerms == nil then
+        filePerms = {}
+    end
     if currentUser == "root" then
-        local filePerms = dofile("/.fp")
         filePerms[file][user] = level
         file = fs.open("/.fp", "w")
         file.write(textutils.serialize(filePerms))
@@ -147,7 +150,6 @@ function kfs.editPerms(file, user, level)
             errorthing = "Permission not granted to edit file permissions on " .. file
             k.scrMSG(4, "k.fs.editPerms", errorthing)
         else
-            local filePerms = dofile("/.fp")
             filePerms[file][user] = level
             file = fs.open("/.fp", "w")
             file.write(textutils.serialize(filePerms))
