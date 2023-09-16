@@ -51,7 +51,6 @@ handle.writeLine("set computer label to "..comname)
 term.clear()
 term.setCursorPos(1,1)
 print("DAWN CP-BSL (Computer Post-Boot State Log)") --Computer Post-Boot State Log
-print("YABADEV KERNEL PATCH 6 RELEASE 3")
 handle.writeLine("Termsize ["..tSizex..","..tSizey.."]")
 print("Termsize ["..tSizex..","..tSizey.."]")
 handle.writeLine("ID/Label: "..ComLab)
