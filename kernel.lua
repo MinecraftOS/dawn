@@ -148,3 +148,5 @@ end
 _G.fs.fsCheck = kfs.fsCheck
 _G.fs.listPerms = kfs.listPerms
 _G.fs.editPerms = kfs.editPerms
+
+return k
