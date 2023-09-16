@@ -116,17 +116,24 @@ function k.fs.fsCheck() --check filesystem for all components
     
 end
 
-function k.fs.assignToUser(file,user)
-    if user == "all" then
-        
+local function fpedit(file, user, level)
+
 end
 
-function k.fs.whoOwns(file)
-    
+function k.fs.listPerms(file)
+    local filePerms = dofile("/.fp")
+    data = {}
+    for i,v in ipairs(filePerms[file]) do
+        local level = string.sub(i, 1, 1)
+        local user = string.sub(i, 2)
+        data[user] = level
+    end
+    return data
 end
 
 function k.fs.editPerms(file, user, level)
-
+    perms = k.fs.listPerms(file)
+    
 end
 
 return k
