@@ -113,15 +113,20 @@ end
 k.fs = {}
 
 function k.fs.fsCheck() --check filesystem for all components
-
+    
 end
 
 function k.fs.assignToUser(file,user)
-    
+    if user == "all" then
+        
 end
 
 function k.fs.whoOwns(file)
     
+end
+
+function k.fs.editPerms(file, user, level)
+
 end
 
 return k
