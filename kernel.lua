@@ -139,6 +139,9 @@ function kfs.editPerms(file, user, level)
     if filePerms == nil then
         filePerms = {}
     end
+    if filePerms[file] == nil then
+        filePerms[file] = {}
+    end
     if currentUser == "root" then
         filePerms[file][user] = level
         file = fs.open("/.fp", "w")
