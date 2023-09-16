@@ -110,18 +110,59 @@ function k.isSide(a)
     return a == "bottom" or a == "top" or a == "left" or a == "right" or a == "back" or a == "front"
 end
 
-k.fs = {}
+oldfs = _G.fs
+kfs = {}
 
-function k.fs.fsCheck() --check filesystem for all components
-
-end
-
-function k.fs.assignToUser(file,user)
+function kfs.fsCheck() --check filesystem for all components
     
 end
 
-function k.fs.whoOwns(file)
-    
+function kfs.listPerms(file)
+    local filePerms = dofile("/.fp")
+    data = {}
+    function trylist()
+        for i,v in ipairs(filePerms[file]) do
+            local level = string.sub(i, 1, 1)
+            local user = string.sub(i, 2)
+            data[user] = level
+        end
+    end
+    pcall(trylist)
+    return data
 end
+
+function kfs.editPerms(file, user, level)
+    local handle = oldfs.open("/etc/usr/.login","r")
+    local currentUser = handle.readLine()
+    handle.close()
+    local filePerms = dofile("/.fp")
+    if filePerms == nil then
+        filePerms = {}
+    end
+    if filePerms[file] == nil then
+        filePerms[file] = {}
+    end
+    if currentUser == "root" then
+        filePerms[file][user] = level
+        file = fs.open("/.fp", "w")
+        file.write(textutils.serialize(filePerms))
+        file.close()
+    else
+        perms = kfs.listPerms(file)
+        if perms[currentUser] == nil or perms[currentUser] == 0 or perms[currentUser] == 1 then
+            errorthing = "Permission not granted to edit file permissions on " .. file
+            k.scrMSG(4, "k.fs.editPerms", errorthing)
+        else
+            filePerms[file][user] = level
+            file = fs.open("/.fp", "w")
+            file.write(textutils.serialize(filePerms))
+            file.close()
+        end
+    end
+end
+
+_G.fs.fsCheck = kfs.fsCheck
+_G.fs.listPerms = kfs.listPerms
+_G.fs.editPerms = kfs.editPerms
 
 return k
