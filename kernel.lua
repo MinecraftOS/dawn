@@ -135,7 +135,7 @@ function kfs.editPerms(file, user, level)
     if type(level) ~= "number" then
         k.scrMSG(4, "kfs.editPerms", "Level must be integer")
         return false
-    else
+    end
     local handle = oldfs.open("/etc/usr/.login","r")
     local currentUser = handle.readLine()
     handle.close()
@@ -169,7 +169,7 @@ function kfs.setOwner(file, user, newLevel)
     if type(newLevel) ~= "number" then
         k.scrMSG(4, "kfs.setOwner", "newLevel must be integer")
         return false
-    else
+    end
     if filePerms == nil then
         filePerms = {}
     end
