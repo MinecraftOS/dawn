@@ -110,13 +110,14 @@ function k.isSide(a)
     return a == "bottom" or a == "top" or a == "left" or a == "right" or a == "back" or a == "front"
 end
 
-k.fs = {}
+oldfs = _G.fs
+kfs = {}
 
-function k.fs.fsCheck() --check filesystem for all components
+function kfs.fsCheck() --check filesystem for all components
     
 end
 
-function k.fs.listPerms(file)
+function kfs.listPerms(file)
     local filePerms = dofile("/.fp")
     data = {}
     for i,v in ipairs(filePerms[file]) do
@@ -127,9 +128,9 @@ function k.fs.listPerms(file)
     return data
 end
 
-function k.fs.editPerms(file, user, level)
-    perms = k.fs.listPerms(file)
-    local handle = fs.open("/etc/usr/.login","r")
+function kfs.editPerms(file, user, level)
+    perms = kfs.listPerms(file)
+    local handle = oldfs.open("/etc/usr/.login","r")
     local currentUser = handle.readLine()
     handle.close()
     if perms[currentUser] == nil or perms[currentUser] == 0 or perms[currentUser] == 1 then
@@ -144,4 +145,6 @@ function k.fs.editPerms(file, user, level)
     end
 end
 
-return k
+_G.fs.fsCheck = kfs.fsCheck
+_G.fs.listPerms = kfs.listPerms
+_G.fs.editPerms = kfs.editPerms
