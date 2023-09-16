@@ -116,10 +116,6 @@ function k.fs.fsCheck() --check filesystem for all components
     
 end
 
-local function fpedit(file, user, level)
-
-end
-
 function k.fs.listPerms(file)
     local filePerms = dofile("/.fp")
     data = {}
