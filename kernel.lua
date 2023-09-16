@@ -120,16 +120,18 @@ end
 function kfs.listPerms(file)
     local filePerms = dofile("/.fp")
     data = {}
-    for i,v in ipairs(filePerms[file]) do
-        local level = string.sub(i, 1, 1)
-        local user = string.sub(i, 2)
-        data[user] = level
+    function trylist()
+        for i,v in ipairs(filePerms[file]) do
+            local level = string.sub(i, 1, 1)
+            local user = string.sub(i, 2)
+            data[user] = level
+        end
     end
+    pcall(trylist)
     return data
 end
 
 function kfs.editPerms(file, user, level)
-    perms = kfs.listPerms(file)
     local handle = oldfs.open("/etc/usr/.login","r")
     local currentUser = handle.readLine()
     handle.close()
@@ -140,6 +142,7 @@ function kfs.editPerms(file, user, level)
         file.write(textutils.serialize(filePerms))
         file.close()
     else
+        perms = kfs.listPerms(file)
         if perms[currentUser] == nil or perms[currentUser] == 0 or perms[currentUser] == 1 then
             errorthing = "Permission not granted to edit file permissions on " .. file
             k.scrMSG(4, "k.fs.editPerms", errorthing)
