@@ -23,6 +23,7 @@
 /boot/dbios/init.lua
 /boot/dbios/dbios.lua
 /boot/dbios/core/config.lua
+/boot/dbios/core/help.lua
 /boot/dbios/core/reboot.lua
 /boot/dbios/core/set.lua
 /etc/sudoers
