@@ -148,7 +148,7 @@ function kfs.editPerms(file, user, level)
     end
     if currentUser == "root" then
         filePerms[file][user] = level
-        file = fs.open("/.fp", "w")
+        file = oldfs.open("/.fp", "w")
         file.write(textutils.serialize(filePerms))
         file.close()
     else
@@ -158,7 +158,7 @@ function kfs.editPerms(file, user, level)
             k.scrMSG(4, "kfs.editPerms", errorthing)
         else
             filePerms[file][user] = level
-            file = fs.open("/.fp", "w")
+            file = oldfs.open("/.fp", "w")
             file.write(textutils.serialize(filePerms))
             file.close()
         end
@@ -183,7 +183,7 @@ function kfs.setOwner(file, user, newLevel)
     if perms[currentUser] == "owner" then
         filePerms[file][currentUser] = newLevel
         filePerms[file][user] = "owner"
-        file = fs.open("/.fp", "w")
+        file = oldfs.open("/.fp", "w")
         file.write(textutils.serialize(filePerms))
         file.close()
     else
@@ -195,5 +195,6 @@ end
 _G.fs.fsCheck = kfs.fsCheck
 _G.fs.listPerms = kfs.listPerms
 _G.fs.editPerms = kfs.editPerms
-
+_G.fs.setOwner = kfs.setOwner
+        
 return k
