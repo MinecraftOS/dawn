@@ -127,7 +127,7 @@ function k.fs.listPerms(file)
     return data
 end
 
-function k.fs.editPerms(file, user, level)
+function k.fs.editPerms(file, level)
     perms = k.fs.listPerms(file)
     local handle = fs.open("/etc/usr/.login","r")
     local currentUser = handle.readLine()
@@ -137,7 +137,7 @@ function k.fs.editPerms(file, user, level)
         k.scrMSG(4, "k.fs.editPerms", errorthing)
     else
         local filePerms = dofile("/.fp")
-        filePerms[file][user] = level
+        filePerms[file][currentUser] = level
         file = fs.open("/.fp", "w")
         file.write(textutils.serialize(filePerms))
         file.close()
