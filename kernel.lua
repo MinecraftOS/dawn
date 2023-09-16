@@ -133,7 +133,13 @@ end
 
 function k.fs.editPerms(file, user, level)
     perms = k.fs.listPerms(file)
-    
+    local handle = fs.open("/etc/usr/.login","r")
+    local currentUser = handle.readLine()
+    handle.close()
+    if perms[currentUser] == nil or perms[currentUser] == 0 or perms[currentUser] == 1 then
+        errorthing = "Permission not granted to edit file permissions on " .. file
+        k.scrMSG(4, "k.fs.editPerms", errorthing)
+    end
 end
 
 return k
