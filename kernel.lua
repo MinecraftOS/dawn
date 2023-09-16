@@ -132,6 +132,10 @@ function kfs.listPerms(file)
 end
 
 function kfs.editPerms(file, user, level)
+    if type(level) ~= "number" then
+        k.scrMSG(4, "kfs.editPerms", "Level must be integer")
+        return false
+    end
     local handle = oldfs.open("/etc/usr/.login","r")
     local currentUser = handle.readLine()
     handle.close()
@@ -144,25 +148,53 @@ function kfs.editPerms(file, user, level)
     end
     if currentUser == "root" then
         filePerms[file][user] = level
-        file = fs.open("/.fp", "w")
+        file = oldfs.open("/.fp", "w")
         file.write(textutils.serialize(filePerms))
         file.close()
     else
         perms = kfs.listPerms(file)
         if perms[currentUser] == nil or perms[currentUser] == 0 or perms[currentUser] == 1 then
             errorthing = "Permission not granted to edit file permissions on " .. file
-            k.scrMSG(4, "k.fs.editPerms", errorthing)
+            k.scrMSG(4, "kfs.editPerms", errorthing)
         else
             filePerms[file][user] = level
-            file = fs.open("/.fp", "w")
+            file = oldfs.open("/.fp", "w")
             file.write(textutils.serialize(filePerms))
             file.close()
         end
     end
 end
 
+function kfs.setOwner(file, user, newLevel)
+    if type(newLevel) ~= "number" then
+        k.scrMSG(4, "kfs.setOwner", "newLevel must be integer")
+        return false
+    end
+    if filePerms == nil then
+        filePerms = {}
+    end
+    if filePerms[file] == nil then
+        filePerms[file] = {}
+    end
+    perms = kfs.listPerms(file)
+    local handle = oldfs.open("/etc/usr/.login","r")
+    local currentUser = handle.readLine()
+    handle.close()
+    if perms[currentUser] == "owner" then
+        filePerms[file][currentUser] = newLevel
+        filePerms[file][user] = "owner"
+        file = oldfs.open("/.fp", "w")
+        file.write(textutils.serialize(filePerms))
+        file.close()
+    else
+        k.scrMSG(4, "kfs.setOwner", "You are not allowed to setOwner")
+        return false
+    end
+end
+
 _G.fs.fsCheck = kfs.fsCheck
 _G.fs.listPerms = kfs.listPerms
 _G.fs.editPerms = kfs.editPerms
-
+_G.fs.setOwner = kfs.setOwner
+        
 return k

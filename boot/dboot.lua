@@ -3,6 +3,7 @@
 
 local ver = fs.open("/etc/.dawninf", "r")
 local v = ver.readLine()
+local kerv = ver.readLine()
 ver.close()
 
 local ke = require "/kernel"
@@ -34,6 +35,8 @@ if tSizex == 26 and tSizey == 20 then
     paintutils.drawImage(image, term.getCursorPos())
     term.setCursorPos(7,13)
     print("Dawn OS pre-"..v)
+    term.setCursorPos(7,12)
+    print(kerv)
     term.setCursorPos(3,18)
     print("ENTER to boot to login,")
     term.setCursorPos(4,19)
@@ -44,6 +47,8 @@ else
     paintutils.drawImage(image, term.getCursorPos())
     term.setCursorPos(16,13)
     print("Dawn OS pre-"..v)
+    term.setCursorPos(16,12)
+    print(kerv)
     term.setCursorPos(5,18)
     print("ENTER to boot to login, Z to boot to dbios.")
 end
