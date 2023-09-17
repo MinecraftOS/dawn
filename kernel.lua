@@ -192,10 +192,42 @@ function kfs.setOwner(file, user, newLevel)
     end
 end
 
+function kfs.move(path, dest)
+    handle = oldfs.open("/etc/usr/.login", "r")
+    usr = handle.readLine()
+    handle.close()
+    if path == "/.fp" or path == ".fp" or path == "startup.lua" or path == "/startup.lua" or path == "kernel.lua" or path == "/kernel.lua" then
+        if usr == "root" then
+            oldfs.move(path, dest)
+        else
+            k.scrMSG(4, "kfs.move", "root required to edit protected files")
+        end
+    else
+        oldfs.move(path, dest)
+    end
+end
+
+function kfs.open(path, mode)
+    handle = oldfs.open("/etc/usr/.login", "r")
+    usr = handle.readLine()
+    handle.close()
+    if path == "/.fp" or path == ".fp" or path == "startup.lua" or path == "/startup.lua" or path == "kernel.lua" or path == "/kernel.lua" then
+        if usr == "root" then
+            oldfs.open(path, mode)
+        else
+            k.scrMSG(4, "kfs.open", "root required to edit protected files")
+        end
+    else
+        oldfs.open(path, mode)
+    end
+end
+
 _G.fs.fsCheck = kfs.fsCheck
 _G.fs.listPerms = kfs.listPerms
 _G.fs.editPerms = kfs.editPerms
 _G.fs.setOwner = kfs.setOwner
+_G.fs.move = kfs.move
+_G.fs.open = kfs.open
 
 custom = {}
 
