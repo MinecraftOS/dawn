@@ -222,6 +222,8 @@ function custom.printCenter(str,centerVert,customY)
     return true
 end
 
+_G.dawn = {}
+
 _G.dawn.findCenter = custom.findCenter
 _G.dawn.printCenter = custom.printCenter
 

@@ -17,6 +17,7 @@ bin/ldisk.lua
 bin/fetch.lua
 bin/ls.lua
 bin/edit.lua
+bin/ofs.lua
 
 # .settings
 .settings
