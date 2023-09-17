@@ -21,6 +21,7 @@ local coreLS = {
     "set",
     "config",
     "reboot",
+    "help",
 }
 
 for _,v in pairs(coreLS) do

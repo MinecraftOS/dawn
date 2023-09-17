@@ -196,5 +196,33 @@ _G.fs.fsCheck = kfs.fsCheck
 _G.fs.listPerms = kfs.listPerms
 _G.fs.editPerms = kfs.editPerms
 _G.fs.setOwner = kfs.setOwner
-        
+
+custom = {}
+
+function custom.findCenter(str,centerVert,customY)
+    local MX,MY = term.getSize()
+    local X = (MX/2)-(string.len(str)/2)
+    if centerVert then
+        term.setCursorPos(X,MY/2)
+    else
+        term.setCursorPos(X,customY)
+    end
+    return true
+end
+
+function custom.printCenter(str,centerVert,customY)
+    local MX,MY = term.getSize()
+    local X = (MX/2)-(string.len(str)/2)
+    if centerVert then
+        term.setCursorPos(X,MY/2)
+    else
+        term.setCursorPos(X,customY)
+    end
+    print(str)
+    return true
+end
+
+_G.dawn.findCenter = custom.findCenter
+_G.dawn.printCenter = custom.printCenter
+
 return k
