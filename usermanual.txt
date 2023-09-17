@@ -1,0 +1,30 @@
+Dawn OS idev-1.1.0 user manual
+
+1. Login
+The two logins present are the user login set by install, and the root account. Username and password are both root.
+
+2. commands
+Most commands are getting a "-h" help flag addition, but that's wip.
+
+cat: cat (filepath) | example: cat /etc/passwd
+output:
+root:root:0:nil:/usr/bin/dash.lua
+
+(on an instance with just root user)
+
+cd - change to a directory (cd <dir>)
+ls - list contents of a directory
+cls - clear screen
+copy - copy a file (copy <file> <destination>)
+move - move a file (move <file> <destination>)
+dfm - dusk file manager. navigate by typing the directory/file to go to/open (autocomplete is on)
+edit - edit a file (edit <file>)
+help - get the commands list
+label - set the computer label
+login - login prompt
+pkg - package management
+pwd - print working directory
+rm - remove a dir/file (rm <file> | OR | rm -rf <dir>)
+sysmgr - system management (sysmgr -h)
+touch - make a file (touch <file>)
+usr - add/remove users

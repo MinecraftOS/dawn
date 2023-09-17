@@ -1,33 +1,51 @@
-Dawn Kernel
+Dawn OS
 By Dusk
-Development start (1.0.0): Tuesday June 6th, 2023 at 9:00PM
-Development end (1.0.0): TBD
+Development start: Tuesday June 6th, 2023 at 9:00PM
+Development end: TBD
++==========================================================+
+
+=== IMPORTANT NOTE ===
+All code in this project is under the GNU GPL 3.0, and failure to modify or otherwise redistribute 
+without following the license terms can lead to formal action.
+
+I take free software seriously.
+Especially my own.
 
 +==========================================================+
 
-What is this?
+Dawn was originally a project coming right off the heels of CC-Linux, one of my old projects. 
+The idea was a CC OS kernel, but it ended up steamrolling into a full blown *NIX-Like OS for CC,
+ith all the features and such. Everything in the idev branch is WIP, while everything in release
+is fully stable and finished up. Of course, there's nothing in release yet, as this project is still
+a WIP.
 
-It's a CC OS kernel, coming with a filesystem, custom terminal, libraries, programs, and a configs folder right out of the box.
-it's a very heavy WIP, so do be patient. I will also provide an installer script to put in your OS installer so that you don't need to
-have your theoretical end user run two installers, or even have your script run a second installer.
+Current notable features:
+- A very cluttered /etc/
+- A decentralized logging system
+- 3 libraries
+- Two terminals
+- like seriously /etc/ is a damn mess
+- A registry
+- /bin/ is notable ig
+- package manager (pkg)
+- A lot of bad and inneficient code, most of this damn thing needs a good rewrite
 
-Will you code absolutely everything on your own?
++==========================================================+
 
-Oh absolutely not. I'll obviously code things like the kernel and terminal myself, but anything that isn't signed personally is from
-someone probably far more talented than me. In terms of using libraries and such from others, they will be added via the 'libsinstall'
-script on the release branch. In this branch, however, they will just be there as the libraries themselves for developmental purposes.
-There won't be an idev install snippet, if you want the idev stuff, get it yourself with wgets.
+How to contribute:
 
-Will you be open to contributions?
+1. Issues in Github
+Open the issues tab and submit an issue if you find a bug. I (or anyone willing) will look into it and get it fixed ASAP.
 
-Absolutely! This code is probably hot garbage and absolutely inneficient, and people who are better at efficient code can help fix my
-garbage code. I reccomend just making pull requests, and I'll double check they work as described on my local copy, then once it's
-verified, I'll make the merge happen.
+2. Forking and pull requesting
+Fork the repo, make changes, then make a pull request. Code will be reviewed before acceptance.
 
-What are the rules for contributions?
+3. Commiting to the repo directly
+If you ask nicely, you can.
 
-For contributing, I have just a few rules.
+Making up to 3 useful commits, pull requests and/or issues, you can be added to the list of contributors who can contribute
+to the repo directly.
 
-1. When making a pull/merge request, make sure to state what the code does and (if applicable) how to trigger the code.
-2. Watch your language (obviously).
-3. Always make sure to also test on a local copy to double check before trying to commit.
+Only two exceptions I've made are Ocawesome and TheAio, for both of them being very helpful throughout dawn's development
+
++==========================================================+

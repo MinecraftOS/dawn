@@ -1,0 +1,27 @@
+# /etc/
+etc/usr/
+etc/passwd
+etc/sudoers
+etc/hostname
+etc/dump/*
+
+# uncategorized
+tmp/*
+test.lua
+home/*
+var/
+
+# /bin/
+bin/ink.lua
+bin/ldisk.lua
+bin/fetch.lua
+bin/ls.lua
+bin/edit.lua
+
+# .settings
+.settings
+
+# /sys/
+sys/bfs
+sys/reg/
+sys/cfg/

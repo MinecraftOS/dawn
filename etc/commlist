@@ -1,0 +1,19 @@
+DASH Commands:
+cat <file>
+cls
+copy <file> <destination>
+help <topic/-l>
+label <-s <label>/-c/-d>
+login
+move <file> <destination>
+pkg <-i <pkg>/-r <pkg>/-l>
+pwd
+usr <-a/-r>
+rm <path>
+sudo <command>
+sysmgr <--cleanup/--default-sh <shell>/--clear-config>
+ls <path>
+cd <path>
+edit <file>
+rm <-rf/<path>/<file>>
+touch <file>

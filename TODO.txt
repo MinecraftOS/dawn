@@ -1,0 +1,14 @@
+TODO LIST | pre-1.1.1
+
+- Make custom cd/ls (50%)
+- copy and move custom errors (they do though lol)
+- dfm tabulate like ls (100%)
+- make dfm easier to exit (100%)
+- make help actually good (100%)
+- add "-h" flag to most programs (7%)
+- rework pkg, it's spaghetti rn (80%)
+- make some documentation
+- make login not reboot itself when invalid credentials
+- 3-5 second timeout on login
+- add shutdown functionality (100%)
+- finish fs module (0%)
