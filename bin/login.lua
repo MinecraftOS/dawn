@@ -75,9 +75,9 @@ repeat
     handle2.writeLine(user)
     handle2.close()
     if fs.exists("/etc/sh-default") then
-        local defaultsh = fs.open("/etc/sh-default","r")
+        defaultsh = fs.open("/etc/sh-default","r")
     else
-        local defaultsh = fs.open("/etc/dawn/sh-default","r")
+        defaultsh = fs.open("/etc/dawn/sh-default","r")
     end
     local sh = defaultsh.readLine()
     defaultsh.close()
