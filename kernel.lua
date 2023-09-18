@@ -1,7 +1,7 @@
 --[[
-    Dawn Kernel
-    By Dusk
-    1.2.0
+    YABADEV Kernel
+	Currently in beta.
+	Report issues to yabastar.
 ]]
 
 local handle
@@ -110,7 +110,10 @@ function k.isSide(a)
     return a == "bottom" or a == "top" or a == "left" or a == "right" or a == "back" or a == "front"
 end
 
-oldfs = _G.fs
+oldfs = {}
+for i, v in pairs(fs) do
+    oldfs[i] = v
+end
 kfs = {}
 
 function kfs.fsCheck() --check filesystem for all components
@@ -118,16 +121,22 @@ function kfs.fsCheck() --check filesystem for all components
 end
 
 function kfs.listPerms(file)
+	function testing()
     local filePerms = dofile("/.fp")
+	end
+	status, ret = xpcall (testing, debug.traceback)
+
+	print (status)
+	print (ret)
     data = {}
-    function trylist()
-        for i,v in ipairs(filePerms[file]) do
+    if filePerms and filePerms[file] then
+        for i, v in pairs(filePerms[file]) do
             local level = string.sub(i, 1, 1)
             local user = string.sub(i, 2)
             data[user] = level
         end
     end
-    pcall(trylist)
+
     return data
 end
 
@@ -208,17 +217,42 @@ function kfs.move(path, dest)
 end
 
 function kfs.open(path, mode)
-    handle = oldfs.open("/etc/usr/.login", "r")
+    handle = assert(oldfs.open("/etc/usr/.login", "r"))
     usr = handle.readLine()
     handle.close()
     if path == "/.fp" or path == ".fp" or path == "startup.lua" or path == "/startup.lua" or path == "kernel.lua" or path == "/kernel.lua" then
         if usr == "root" then
-            oldfs.open(path, mode)
+            return oldfs.open(path, mode)
         else
             k.scrMSG(4, "kfs.open", "root required to edit protected files")
+            return false
         end
     else
-        oldfs.open(path, mode)
+        if usr == "root" then
+            return oldfs.open(path, mode)
+        else
+            perms = kfs.listPerms(path)
+            level = perms[usr]
+            if level == 0 or level == nil then
+                k.scrMSG(4, "kfs.open", "no permission to edit or read file")
+                return false
+            else
+                if mode == "r" then
+                    if level == 1 or level == 2 or level == "owner" then
+                        return oldfs.open(path, "r")
+                    else
+                        return false
+                    end
+				end
+                if mode == "w" or mode == "a" or mode == "r+" or mode == "w+" or mode == "a+" then
+                    if level == 2 or level == "owner" then
+                        return oldfs.open(path, mode)
+                    else
+                        k.scrMSG(4, "kfs.open", "no permission to edit file")
+                    end
+                end
+            end
+        end
     end
 end
 
@@ -254,6 +288,7 @@ function custom.printCenter(str,centerVert,customY)
     return true
 end
 
+_G.dawn = {}
 _G.dawn.findCenter = custom.findCenter
 _G.dawn.printCenter = custom.printCenter
 
