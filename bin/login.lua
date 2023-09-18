@@ -18,11 +18,6 @@ local function isempty(s) --i robbed this from https://stackoverflow.com/questio
     return s == nil or s == ''
 end
 
-if fs.exists("/etc/usr/.login") then
-    log.writeLine("Deleted: /etc/usr/.login")
-    fs.delete("/etc/usr/.login")
-end
-
 log.writeLine("Perform login and related auth.")
 
 log.close()
