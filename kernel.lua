@@ -1,7 +1,6 @@
 --[[
     YABADEV Kernel
-	Currently in beta.
-	Report issues to yabastar.
+    1.1.0R
 ]]
 
 local handle
@@ -201,22 +200,6 @@ function kfs.setOwner(file, user, newLevel)
     end
 end
 
-function kfs.move(path, dest)
-    handle = oldfs.open("/etc/usr/.login", "r")
-    usr = handle.readLine()
-    handle.close()
-	path = fs.combine(path)
-    if path == ".fp" or path == "startup.lua" or path == "kernel.lua" or path == "bin/login.lua" or path == "etc/usr/.login" then
-        if usr == "root" then
-            oldfs.move(path, dest)
-        else
-            k.scrMSG(4, "kfs.move", "root required to edit protected files")
-        end
-    else
-        oldfs.move(path, dest)
-    end
-end
-
 function kfs.open(path, mode)
     handle = assert(oldfs.open("/etc/usr/.login", "r"))
     usr = handle.readLine()
@@ -226,7 +209,7 @@ function kfs.open(path, mode)
         if usr == "root" then
             return assert(oldfs.open(path, mode))
         else
-            k.scrMSG(4, "kfs.open", "root required to edit protected files")
+            k.scrMSG(4, "kfs.open", "root required to edit or read protected files")
             return false
         end
     else
@@ -253,6 +236,33 @@ function kfs.open(path, mode)
                         k.scrMSG(4, "kfs.open", "no permission to edit file")
                     end
                 end
+            end
+        end
+    end
+end
+
+function kfs.move(path, dest)
+    handle = assert(oldfs.move("/etc/usr/.login", "r"))
+    usr = handle.readLine()
+    handle.close()
+    path = fs.combine(path)
+    if path == ".fp" or path == "startup.lua" or path == "kernel.lua" or path == "bin/login.lua" or path == "etc/usr/.login" then
+        if usr == "root" then
+            return assert(oldfs.move(path, mode))
+        else
+            k.scrMSG(4, "kfs.move", "root required to move protected files")
+            return false
+        end
+    else
+        if usr == "root" then
+            return assert(oldfs.move(path, mode))
+        else
+            perms = kfs.listPerms(path)
+            level = perms[usr]
+            if level == 2 or level == "owner" then
+                return assert(oldfs.move(path, mode))
+            else
+                k.scrMSG(4, "kfs.move", "no permission to move file")
             end
         end
     end
@@ -309,5 +319,6 @@ end
 _G.dawn = {}
 _G.dawn.findCenter = custom.findCenter
 _G.dawn.printCenter = custom.printCenter
+_G.dawn.PIDrun = custom.PIDrun
 
 return k
