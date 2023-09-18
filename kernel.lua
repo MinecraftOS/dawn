@@ -221,16 +221,17 @@ function kfs.open(path, mode)
     handle = assert(oldfs.open("/etc/usr/.login", "r"))
     usr = handle.readLine()
     handle.close()
-    if path == "/.fp" or path == ".fp" or path == "startup.lua" or path == "/startup.lua" or path == "kernel.lua" or path == "/kernel.lua" then
+    path = fs.combine(path)
+    if path == ".fp" or path == "startup.lua" or path == "kernel.lua" or path == "bin/login.lua" or path == "etc/usr/.login" then
         if usr == "root" then
-            return oldfs.open(path, mode)
+            return assert(oldfs.open(path, mode))
         else
             k.scrMSG(4, "kfs.open", "root required to edit protected files")
             return false
         end
     else
         if usr == "root" then
-            return oldfs.open(path, mode)
+            return assert(oldfs.open(path, mode))
         else
             perms = kfs.listPerms(path)
             level = perms[usr]
@@ -240,14 +241,14 @@ function kfs.open(path, mode)
             else
                 if mode == "r" then
                     if level == 1 or level == 2 or level == "owner" then
-                        return oldfs.open(path, "r")
+                        return assert(oldfs.open(path, "r"))
                     else
                         return false
                     end
 				end
                 if mode == "w" or mode == "a" or mode == "r+" or mode == "w+" or mode == "a+" then
                     if level == 2 or level == "owner" then
-                        return oldfs.open(path, mode)
+                        return assert(oldfs.open(path, mode))
                     else
                         k.scrMSG(4, "kfs.open", "no permission to edit file")
                     end
@@ -287,6 +288,22 @@ function custom.printCenter(str,centerVert,customY)
     end
     print(str)
     return true
+end
+
+function custom.PIDrun(prior_error, prior_integral, kp, ki, kd, bias, set, currentval)
+    function pidrun()
+        errorc = set - currentval
+        integral = integral_prior+errorc
+        derivative = errorc-error_prior
+
+        value_out = kp*errorc+ki*integral+kd*derivative+bias
+    end
+    if pcall(pidrun) then
+        return value_out, errorc, integral
+    else
+        k.scrMSG(4, "kernel[PIDrun]", "An error occured when attempting to run PID")
+        return false
+    end
 end
 
 _G.dawn = {}
