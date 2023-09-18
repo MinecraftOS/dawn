@@ -69,7 +69,11 @@ repeat
     local handle2 = fs.open("/etc/usr/.login","w")
     handle2.writeLine(user)
     handle2.close()
-    local defaultsh = fs.open("/etc/sh-default","r")
+    if fs.exists("/etc/sh-default") then
+        defaultsh = fs.open("/etc/sh-default","r")
+    else
+        defaultsh = fs.open("/etc/dawn/sh-default","r")
+    end
     local sh = defaultsh.readLine()
     defaultsh.close()
     local log = fs.open("/var/logs/login","a")
