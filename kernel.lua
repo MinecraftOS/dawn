@@ -205,7 +205,8 @@ function kfs.move(path, dest)
     handle = oldfs.open("/etc/usr/.login", "r")
     usr = handle.readLine()
     handle.close()
-    if path == "/.fp" or path == ".fp" or path == "startup.lua" or path == "/startup.lua" or path == "kernel.lua" or path == "/kernel.lua" then
+	path = fs.combine(path)
+    if path == ".fp" or path == "startup.lua" or path == "kernel.lua" or path == "bin/login.lua" or path == "etc/usr/.login" then
         if usr == "root" then
             oldfs.move(path, dest)
         else
