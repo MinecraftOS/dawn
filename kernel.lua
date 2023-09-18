@@ -300,6 +300,12 @@ function custom.printCenter(str,centerVert,customY)
     return true
 end
 
+function custom.findCenter2(str)
+    local MX,MY = term.getSize()
+    local X = (MX/2)-(string.len(str)/2)
+    return X
+end
+
 function custom.PIDrun(prior_error, prior_integral, kp, ki, kd, bias, set, currentval)
     function pidrun()
         errorc = set - currentval
