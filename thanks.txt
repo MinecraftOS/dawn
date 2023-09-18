@@ -2,4 +2,4 @@ This file is for thanking people who have aided development by either pull reque
 
 Ocawesome101 - pull request, basically being the main person who helped me make it via teaching. Thank you, man.
 TheAio - added progress bar to installer, making it easier for users to follow along with install process
-yabastar - kernel things
+yabastar - did a lot of things with the kernel
