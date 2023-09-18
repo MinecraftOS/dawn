@@ -43,7 +43,7 @@ if tSizex == 26 and tSizey == 20 then
     term.setCursorPos(4,19)
     write(" Z to boot to dbios.")
 else
-    term.setCursorPos(22,6)
+    term.setCursorPos(22,4)
     local image = paintutils.loadImage("/etc/dawn/logo.nfp")
     paintutils.drawImage(image, term.getCursorPos())
     term.setCursorPos(16,13)
