@@ -30,7 +30,7 @@ local tSizex, tSizey = term.getSize()
 sleep(1)
 term.clear()
 if tSizex == 26 and tSizey == 20 then
-    term.setCursorPos(11,6)
+    term.setCursorPos(11,4)
     local image = paintutils.loadImage("/etc/dawn/logo.nfp")
     paintutils.drawImage(image, term.getCursorPos())
     term.setCursorPos(7,13)
