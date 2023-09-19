@@ -3,109 +3,53 @@
     1.1.2R
 ]]
 
+custom = {}
+
 local handle
 
 local n
 
-local function isempty(s) --i robbed this from https://stackoverflow.com/questions/19664666/check-if-a-string-isnt-nil-or-empty-in-lua
+local function isempty(s)
     return s == nil or s == ''
 end
 
-local k = {}
-
-function k.empty(s) --see line 11
+function custom.isEmpty(s)
     return s == nil or s == ""
 end
 
-function k.scrMSG(type,msg,err) --type: 1,2,3,4,5 (see docs); msg: message; err: error code
+function custom.scrMSG(type,msg)
     local name = fs.getName(shell.getRunningProgram())
-    if isempty(err) then
-        if type == 1 then
-            write("("..name.."):[")
-            term.setTextColor(colors.green)
-            write("OK")
-            term.setTextColor(colors.white)
-            write("]:"..msg.."\n")
-        elseif type == 2 then
-            write("("..name.."):[")
-            term.setTextColor(colors.yellow)
-            write("WARN")
-            term.setTextColor(colors.white)
-            write("]:"..msg.."\n")
-        elseif type == 3 then
-            write("("..name.."):[")
-            term.setTextColor(colors.brown)
-            write("INFO")
-            term.setTextColor(colors.white)
-            write("]:"..msg.."\n")
-        elseif type == 4 then
-            printError("("..name.."):[ ERROR ]:"..msg)
-        elseif type == 5 then
-            printError("("..name.."):[ ERROR ]:"..msg)
-            error()
-        end
-    else
-        local errNum = tonumber(err)
-        if errNum then
-            if type == 1 then
-                write("("..name.."):[")
-                term.setTextColor(colors.green)
-                write("OK")
-                term.setTextColor(colors.white)
-                write("]:"..msg.."("..err..")\n")
-                term.setTextColor(colors.yellow)
-                write("WARN")
-                term.setTextColor(colors.white)
-                write("]:"..msg.."("..err..")\n")
-            elseif type == 2 then
-                write("("..name.."):[")
-            elseif type == 3 then
-                write("("..name.."):[")
-                term.setTextColor(colors.brown)
-                write("INFO")
-                term.setTextColor(colors.white)
-                write("]:"..msg.."("..err..")\n")
-            elseif type == 4 then
-                printError("("..name.."):[ ERROR ]:"..msg.."(code:"..err..")")
-            elseif type == 5 then
-                printError("("..name.."):[ ERROR ]:"..msg.."(code:"..err..")")
-                error()
-            end
-        else
-            if type == 1 then
-                write("("..name.."):[")
-                term.setTextColor(colors.green)
-                write("OK")
-                term.setTextColor(colors.white)
-                write("]:"..msg.."\n")
-            elseif type == 2 then
-                write("("..name.."):[")
-                term.setTextColor(colors.yellow)
-                write("WARN")
-                term.setTextColor(colors.white)
-                write("]:"..msg.."\n")
-            elseif type == 3 then
-                write("("..name.."):[")
-                term.setTextColor(colors.brown)
-                write("INFO")
-                term.setTextColor(colors.white)
-                write("]:"..msg.."\n")
-            elseif type == 4 then
-                printError("("..name.."):[ ERROR ]:"..msg)
-            elseif type == 5 then
-                printError("("..name.."):[ ERROR ]:"..msg)
-                error()
-            end
-        end
-        
+    if type == 1 then
+	write("("..name.."):[")
+	term.setTextColor(colors.green)
+	write("OK")
+	term.setTextColor(colors.white)
+	write("]:"..msg.."\n")
+    elseif type == 2 then
+	write("("..name.."):[")
+	term.setTextColor(colors.yellow)
+	write("WARN")
+	term.setTextColor(colors.white)
+	write("]:"..msg.."\n")
+    elseif type == 3 then
+	write("("..name.."):[")
+	term.setTextColor(colors.brown)
+	write("INFO")
+	term.setTextColor(colors.white)
+	write("]:"..msg.."\n")
+    elseif type == 4 then
+	printError("("..name.."):[ ERROR ]:"..msg)
+    elseif type == 5 then
+	printError("("..name.."):[ ERROR ]:"..msg)
+	error()
     end
 end
 
-function k.isColor(a)
+function custom.isColor(a)
     return a == "white" or a == "orange" or a == "magenta" or a == "lime" or a == "pink" or a == "gray" or a == "cyan" or a == "brown" or a == "blue" or a == "green"
 end
 
-function k.isSide(a)
+function custom.isSide(a)
     return a == "bottom" or a == "top" or a == "left" or a == "right" or a == "back" or a == "front"
 end
 
@@ -141,7 +85,7 @@ end
 
 function kfs.editPerms(file, user, level)
     if type(level) ~= "number" then
-        k.scrMSG(4, "kfs.editPerms", "Level must be integer")
+        k.scrMSG(4, "kernel[kfs.editPerms]: Level must be integer")
         return false
     end
     local handle = oldfs.open("/etc/usr/.login","r")
@@ -162,9 +106,9 @@ function kfs.editPerms(file, user, level)
     else
         perms = kfs.listPerms(file)
         if perms[currentUser] == nil or perms[currentUser] == 0 or perms[currentUser] == 1 then
-            errorthing = "Permission not granted to edit file permissions on " .. file
-            k.scrMSG(4, "kfs.editPerms", errorthing)
-        else
+            errorthing = "kernel[kfs.editPerms]: Permission not granted to edit file permissions on " .. file
+            k.scrMSG(4, errorthing)
+        else 
             filePerms[file][user] = level
             file = oldfs.open("/.fp", "w")
             file.write(textutils.serialize(filePerms))
@@ -175,7 +119,7 @@ end
 
 function kfs.setOwner(file, user, newLevel)
     if type(newLevel) ~= "number" then
-        k.scrMSG(4, "kfs.setOwner", "newLevel must be integer")
+        k.scrMSG(4, "kernel[kfs.setOwner]: newLevel must be integer")
         return false
     end
     if filePerms == nil then
@@ -195,7 +139,7 @@ function kfs.setOwner(file, user, newLevel)
         file.write(textutils.serialize(filePerms))
         file.close()
     else
-        k.scrMSG(4, "kfs.setOwner", "You are not allowed to setOwner")
+        k.scrMSG(4, "kernel[kfs.setOwner]: You are not allowed to setOwner")
         return false
     end
 end
@@ -209,7 +153,7 @@ function kfs.open(path, mode)
         if usr == "root" then
             return assert(oldfs.open(path, mode))
         else
-            k.scrMSG(4, "kfs.open", "root required to edit or read protected files")
+            k.scrMSG(4, "kernel[kfs.open]: root required to edit or read protected files")
             return false
         end
     else
@@ -219,7 +163,7 @@ function kfs.open(path, mode)
             perms = kfs.listPerms(path)
             level = perms[usr]
             if level == 0 or level == nil then
-                k.scrMSG(4, "kfs.open", "no permission to edit or read file")
+                k.scrMSG(4, "kernel[kfs.open]: no permission to edit or read file")
                 return false
             else
                 if mode == "r" then
@@ -233,7 +177,7 @@ function kfs.open(path, mode)
                     if level == 2 or level == "owner" then
                         return assert(oldfs.open(path, mode))
                     else
-                        k.scrMSG(4, "kfs.open", "no permission to edit file")
+                        k.scrMSG(4, "kernel[kfs.open]: no permission to edit file")
                     end
                 end
             end
@@ -248,21 +192,48 @@ function kfs.move(path, dest)
     path = fs.combine(path)
     if path == ".fp" or path == "startup.lua" or path == "kernel.lua" or path == "bin/login.lua" or path == "etc/usr/.login" then
         if usr == "root" then
-            return assert(oldfs.move(path, mode))
+            return assert(oldfs.move(path, dest))
         else
-            k.scrMSG(4, "kfs.move", "root required to move protected files")
+            k.scrMSG(4, "kernel[kfs.move]: root required to move protected files")
             return false
         end
     else
         if usr == "root" then
-            return assert(oldfs.move(path, mode))
+            return assert(oldfs.move(path, dest))
         else
             perms = kfs.listPerms(path)
             level = perms[usr]
             if level == 2 or level == "owner" then
-                return assert(oldfs.move(path, mode))
+                return assert(oldfs.move(path, dest))
             else
-                k.scrMSG(4, "kfs.move", "no permission to move file")
+                k.scrMSG(4, "kernel[kfs.move]: no permission to move file")
+            end
+        end
+    end
+end
+
+function kfs.delete(path)
+    handle = assert(oldfs.move("/etc/usr/.login", "r"))
+    usr = handle.readLine()
+    handle.close()
+    path = fs.combine(path)
+    if path == ".fp" or path == "startup.lua" or path == "kernel.lua" or path == "bin/login.lua" or path == "etc/usr/.login" then
+        if usr == "root" then
+            return assert(oldfs.delete(path))
+        else
+            k.scrMSG(4, "kernel[kfs.move]: root required to move protected files")
+            return false
+        end
+    else
+        if usr == "root" then
+            return assert(oldfs.delete(path))
+        else
+            perms = kfs.listPerms(path)
+            level = perms[usr]
+            if level == 2 or level == "owner" then
+                return assert(oldfs.delete(path))
+            else
+                k.scrMSG(4, "kernel[kfs.move]: no permission to move file")
             end
         end
     end
@@ -274,8 +245,6 @@ _G.fs.editPerms = kfs.editPerms
 _G.fs.setOwner = kfs.setOwner
 _G.fs.move = kfs.move
 _G.fs.open = kfs.open
-
-custom = {}
 
 function custom.findCenter(str,centerVert,customY)
     local MX,MY = term.getSize()
@@ -317,7 +286,7 @@ function custom.PIDrun(prior_error, prior_integral, kp, ki, kd, bias, set, curre
     if pcall(pidrun) then
         return value_out, errorc, integral
     else
-        k.scrMSG(4, "kernel[PIDrun]", "An error occured when attempting to run PID")
+        k.scrMSG(4, "kernel[PIDrun]: An error occured when attempting to run PID")
         return false
     end
 end
@@ -327,5 +296,9 @@ _G.dawn = {}
 _G.dawn.findCenter = custom.findCenter
 _G.dawn.printCenter = custom.printCenter
 _G.dawn.PIDrun = custom.PIDrun
+_G.dawn.isSide = custom.isSide
+_G.dawn.isColor = custom.isColor
+_G.dawn.scrMSG = custom.scrMSG
+_G.dawn.isEmpty = custom.isEmpty
 
 return k
