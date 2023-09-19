@@ -1,7 +1,13 @@
 --[[
-    YABADEV Kernel
+    YABADEV Kernel (with login and globals fixes by Dusk)
     1.1.2R
 ]]
+
+if not fs.exists("/etc/usr/.login") then
+    local handle = fs.open("/etc/usr/.login","w")
+    handle.writeLine("root") --just autolog as root first if /etc/usr/.login doesn't exist.
+    handle.close()
+end
 
 local handle
 
@@ -327,5 +333,6 @@ _G.dawn = {}
 _G.dawn.findCenter = custom.findCenter
 _G.dawn.printCenter = custom.printCenter
 _G.dawn.PIDrun = custom.PIDrun
+_G.dawn.findCenter2 = custom.findCenter2
 
 return k

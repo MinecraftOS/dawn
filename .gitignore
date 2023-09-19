@@ -10,6 +10,7 @@ tmp/*
 test.lua
 home/*
 var/
+.vscode/
 
 # /bin/
 bin/ink.lua
