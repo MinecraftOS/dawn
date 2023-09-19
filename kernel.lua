@@ -105,7 +105,7 @@ function kfs.editPerms(file, user, level)
         file.close()
     else
         perms = kfs.listPerms(file)
-        if perms[currentUser] == nil or perms[currentUser] == 0 or perms[currentUser] == 1 then
+        if perms[currentUser] == nil or perms[currentUser] == 0 or perms[currentUser] == 1 or perms.all == 1 or perms.all == 2 then
             errorthing = "kernel[kfs.editPerms]: Permission not granted to edit file permissions on " .. file
             k.scrMSG(4, errorthing)
         else 
@@ -132,9 +132,9 @@ function kfs.setOwner(file, user, newLevel)
     local handle = oldfs.open("/etc/usr/.login","r")
     local currentUser = handle.readLine()
     handle.close()
-    if perms[currentUser] == "owner" then
+    if perms.owner == currentUser then
         filePerms[file][currentUser] = newLevel
-        filePerms[file][user] = "owner"
+        filePerms[file].owner = user
         file = oldfs.open("/.fp", "w")
         file.write(textutils.serialize(filePerms))
         file.close()
@@ -161,20 +161,20 @@ function kfs.open(path, mode)
             return assert(oldfs.open(path, mode))
         else
             perms = kfs.listPerms(path)
-            level = perms[usr]
+            level = perms[usr] or perms.all
             if level == 0 or level == nil then
                 k.scrMSG(4, "kernel[kfs.open]: no permission to edit or read file")
                 return false
             else
                 if mode == "r" then
-                    if level == 1 or level == 2 or level == "owner" then
+                    if level == 1 or level == 2 or perms.owner == usr or perms.all == 1 or perms.all == 2 then
                         return assert(oldfs.open(path, "r"))
                     else
                         return false
                     end
-				        end
+				end
                 if mode == "w" or mode == "a" or mode == "r+" or mode == "w+" or mode == "a+" then
-                    if level == 2 or level == "owner" then
+                    if level == 2 or perms.owner == usr or perms.all == 2 then
                         return assert(oldfs.open(path, mode))
                     else
                         k.scrMSG(4, "kernel[kfs.open]: no permission to edit file")
@@ -203,7 +203,7 @@ function kfs.move(path, dest)
         else
             perms = kfs.listPerms(path)
             level = perms[usr]
-            if level == 2 or level == "owner" then
+            if level == 2 or perms.owner == usr or perms.all == 2 then
                 return assert(oldfs.move(path, dest))
             else
                 k.scrMSG(4, "kernel[kfs.move]: no permission to move file")
@@ -230,7 +230,7 @@ function kfs.delete(path)
         else
             perms = kfs.listPerms(path)
             level = perms[usr]
-            if level == 2 or level == "owner" then
+            if level == 2 or perms.owner == usr then
                 return assert(oldfs.delete(path))
             else
                 k.scrMSG(4, "kernel[kfs.move]: no permission to move file")
