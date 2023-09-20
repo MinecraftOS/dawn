@@ -8,22 +8,11 @@ ver.close()
 
 local ke = require "/kernel"
 
-local fromROM = {
-    "/bin/ls.lua",
-    "/bin/edit.lua"
-}
-
-for k,v in pairs(fromROM) do
-    if fs.exists(v) then
-        ke.scrMSG(1,"exists: "..v)
-    else
-        if v == "/bin/ls.lua" then
-            fs.copy("/rom/programs/list.lua",v)
-        elseif v == "/bin/edit.lua" then
-            fs.copy("/rom/programs/edit.lua",v)
-        end
-        ke.scrMSG(3,"had to copy from rom: "..v)
-    end
+if not fs.exists("/bin/edit.lua") then
+    fs.copy("/rom/programs/edit.lua","/bin/edit.lua")
+    ke.scrMSG(3,"Had to pull edit from rom.")
+else
+    ke.scrMSG(1,"/bin/edit.lua exists")
 end
 
 local tSizex, tSizey = term.getSize()
